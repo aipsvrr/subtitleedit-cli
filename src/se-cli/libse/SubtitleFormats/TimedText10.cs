@@ -457,7 +457,7 @@ namespace seconv.libse.SubtitleFormats
 
                 if (text.StartsWith("{\\an5}", StringComparison.Ordinal) && AddDefaultRegionIfNotExists(xml, "centerCenter"))
                 {
-                    region = "centerСenter";
+                    region = "centerCenter";
                 }
 
                 if (text.StartsWith("{\\an6}", StringComparison.Ordinal) && AddDefaultRegionIfNotExists(xml, "centerRight"))
