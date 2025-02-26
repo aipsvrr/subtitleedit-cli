@@ -634,7 +634,8 @@ namespace seconv.libse.Common
         public List<string> AssaOverrideTagHistory { get; set; }
         public bool AssaResolutionAutoNew { get; set; }
         public bool AssaResolutionPromptChange { get; set; }
-
+        public bool AssaShowScaledBorderAndShadow { get; set; }
+        public bool AssaShowPlayDepth { get; set; }
         public string DCinemaFontFile { get; set; }
         public string DCinemaLoadFontResource { get; set; }
         public int DCinemaFontSize { get; set; }
@@ -673,6 +674,7 @@ namespace seconv.libse.Common
         public int EbuStlMarginTop { get; set; }
         public int EbuStlMarginBottom { get; set; }
         public int EbuStlNewLineRows { get; set; }
+        public bool EbuStlRemoveEmptyLines { get; set; }
         public int PacVerticalTop { get; set; }
         public int PacVerticalCenter { get; set; }
         public int PacVerticalBottom { get; set; }
@@ -696,6 +698,12 @@ namespace seconv.libse.Common
         public string TimedTextItunesTopExtent { get; set; }
         public string TimedTextItunesBottomOrigin { get; set; }
         public string TimedTextItunesBottomExtent { get; set; }
+        public string TimedTextItunesTimeCodeFormat { get; set; }
+        public string TimedTextItunesStyleAttribute { get; set; }
+        public string TimedTextItunesLanguage { get; set; }
+        public string TimedTextImsc11TimeCodeFormat { get; set; }
+        public string TimedTextImsc11FileExtension { get; set; }
+
 
         public int FcpFontSize { get; set; }
         public string FcpFontName { get; set; }
@@ -703,6 +711,9 @@ namespace seconv.libse.Common
         public string NuendoCharacterListFile { get; set; }
 
         public bool WebVttUseXTimestampMap { get; set; }
+        public bool WebVttUseMultipleXTimestampMap { get; set; }
+        public bool WebVttMergeLinesWithSameText { get; set; }
+        public bool WebVttDoNoMergeTags { get; set; }
         public long WebVttTimescale { get; set; }
         public string WebVttCueAn1 { get; set; }
         public string WebVttCueAn2 { get; set; }
@@ -725,6 +736,8 @@ namespace seconv.libse.Common
             AssaOverrideTagHistory = new List<string>();
             AssaResolutionAutoNew = true;
             AssaResolutionPromptChange = true;
+            AssaShowScaledBorderAndShadow = true;
+            AssaShowPlayDepth = true;
 
             DCinemaFontFile = "Arial.ttf";
             DCinemaLoadFontResource = "urn:uuid:3dec6dc0-39d0-498d-97d0-928d2eb78391";
@@ -742,7 +755,7 @@ namespace seconv.libse.Common
             EbuStlNewLineRows = 2;
 
             PacVerticalTop = 1;
-            PacVerticalCenter = 5;
+            PacVerticalCenter = 6;
             PacVerticalBottom = 11;
 
             DvdStudioProHeader = @"$VertAlign          =   Bottom
@@ -776,6 +789,10 @@ $HorzAlign          =   Center
             TimedTextItunesTopExtent = "100% 15%";
             TimedTextItunesBottomOrigin = "0% 85%";
             TimedTextItunesBottomExtent = "100% 15%";
+            TimedTextItunesTimeCodeFormat = "Frames";
+            TimedTextItunesStyleAttribute = "tts:fontStyle";
+            TimedTextImsc11TimeCodeFormat = "hh:mm:ss.ms";
+            TimedTextImsc11FileExtension = ".xml";
 
             FcpFontSize = 18;
             FcpFontName = "Lucida Grande";
@@ -784,6 +801,7 @@ $HorzAlign          =   Center
 
             WebVttTimescale = 90000;
             WebVttUseXTimestampMap = true;
+            WebVttUseMultipleXTimestampMap = true;
             WebVttCueAn1 = "position:20%";
             WebVttCueAn2 = "";
             WebVttCueAn3 = "position:80%";
@@ -799,7 +817,7 @@ $HorzAlign          =   Center
             TeletextItalicFix = true;
         }
 
-        public void InitializeDCinameSettings(bool smpte)
+        public void InitializeDCinemaSettings(bool smpte)
         {
             if (smpte)
             {
@@ -817,7 +835,7 @@ $HorzAlign          =   Center
                 CurrentDCinemaFontUri = DCinemaFontFile;
                 CurrentDCinemaFontId = "Arial";
             }
-            CurrentDCinemaIssueDate = DateTime.Now.ToString("s") + ".000-00:00";
+            CurrentDCinemaIssueDate = DateTime.Now.ToString("s");
             CurrentDCinemaMovieTitle = "title";
             CurrentDCinemaReelNumber = "1";
             CurrentDCinemaFontColor = Color.White;

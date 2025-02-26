@@ -119,7 +119,7 @@ namespace seconv.libse.SubtitleFormats
 
             if (ss.CurrentDCinemaFontSize == 0)
             {
-                Configuration.Settings.SubtitleSettings.InitializeDCinameSettings(true);
+                Configuration.Settings.SubtitleSettings.InitializeDCinemaSettings(true);
             }
 
             xml.DocumentElement.SelectSingleNode("MovieTitle").InnerText = ss.CurrentDCinemaMovieTitle;
@@ -591,7 +591,7 @@ namespace seconv.libse.SubtitleFormats
             var ss = Configuration.Settings.SubtitleSettings;
             try
             {
-                ss.InitializeDCinameSettings(false);
+                ss.InitializeDCinemaSettings(false);
                 XmlNode node = xml.DocumentElement.SelectSingleNode("SubtitleID");
                 if (node != null)
                 {
