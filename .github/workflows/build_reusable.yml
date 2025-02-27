@@ -1,0 +1,32 @@
+name: __build
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t seconv:1.0 -f docker/Dockerfile .
+
+      - name: Create container from image
+        run: |
+          docker create --name seconv-container seconv:1.0
+
+      - name: Create directories and copy artifact from container
+        run: |
+          mkdir -p subtitleedit-cli/linux-x64/{bin,lib}
+          docker cp seconv-container:/secli/seconv ./subtitleedit-cli/linux-x64/bin/
+          docker cp seconv-container:/secli/libSkiaSharp.so ./subtitleedit-cli/linux-x64/lib/
+
+      - name: Upload artifact to GitHub Actions (only for master builds)
+        uses: actions/upload-artifact@v4
+        with:
+          name: subtitleedit-cli
+          path: subtitleedit-cli
