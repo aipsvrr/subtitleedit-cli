@@ -1,0 +1,29 @@
+name: Release Build and Publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    uses: ./.github/workflows/build_reusable.yml
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: subtitleedit-cli
+          path: subtitleedit-cli
+
+      - name: Create ZIP archive
+        run: tar -czf subtitleedit-cli.tgz subtitleedit-cli
+
+      - name: Publish to GitHub Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          files: subtitleedit-cli.tgz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
